@@ -1,0 +1,36 @@
+class DownloadPart extends Thread {
+    private String part;
+
+    DownloadPart(String part) {
+        this.part = part;
+    }
+
+    public void run() {
+        try {
+            System.out.println(part + " downloading...");
+            Thread.sleep(2000);
+            System.out.println(part + " completed.");
+        } catch (InterruptedException e) {
+            System.out.println("Download interrupted!");
+        }
+    }
+}
+
+public class FileDownload {
+    public static void main(String[] args) {
+        Thread t1 = new DownloadPart("Part 1");
+        Thread t2 = new DownloadPart("Part 2");
+
+        t1.start();
+        try {
+            t1.join();
+        } catch (InterruptedException e) {}
+
+        t2.start();
+        try {
+            t2.join();
+        } catch (InterruptedException e) {}
+
+        System.out.println("File download completed.");
+    }
+}
